@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="jquery-1.10.0.min.js"></script>
+		<script type="text/javascript" src="knockout-2.2.1.js"></script>		
+		<style type="text/css">
+			body{padding:20px 20px 20px 20px;}
+			div{background-color:#0099CF; padding:2em 2em 2em 2em; opacity:0.25;color:white;width:250px;height:0px;border-radius:4px;}
+			.divborder {border:2px solid black;}
+		</style>
+		<title>Simple Knockout</title>
+	</head>
+	<body>
+		<div class="content">
+			<p>
+			   First:&nbsp;<input data-bind="value:firstName"></input>
+			</p>
+			<p>
+			   Last:&nbsp;<input data-bind="value:lastName"></input>
+			</p>
+			<p>
+				Full:&nbsp;&nbsp;<span data-bind="text:fullName"></span>
+			</p>						
+		</div>
+	</body>
+	<script type="text/javascript">
+			var ViewModel = function(first, last){
+				var self = this;
+				self.firstName = ko.observable(first);
+				self.lastName = ko.observable(last);
+				
+				self.fullName = ko.computed(function(){
+					return self.firstName() + " " + self.lastName();
+				});
+
+			};
+
+			ko.applyBindings(new ViewModel('Bob', 'Smith'));
+			
+			$(document).ready(function(){
+				$('.content').animate({height:'200px'}, 1000);
+				$('.content').animate({opacity:'0.98', width:'600px'}, 1500);
+				
+				$('.content').mouseover(function(){
+					$('.content').addClass('divborder');
+				});
+				
+				$('.content').mouseout(function(){
+					$('.content').removeClass('divborder');
+				});
+			});
+		</script>
+</html>
