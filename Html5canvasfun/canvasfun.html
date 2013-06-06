@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Canvas Fun</title>
+	</head>
+	<script type="text/javascript">
+		var canvas, c, zap, speed;
+		speed = 0;
+		
+		window.onload = function(){
+			canvas = document.getElementById("canvas");	
+		    c = canvas.getContext("2d");
+			zapTrigger(400);
+			
+		}
+		
+		function image(){
+			var image = new Image();
+			image.src = "purple.jpg";
+			
+			var x = 35;
+			var y = 300;
+			c.drawImage(image, x, y)
+		}
+		
+		function zapTrigger(time){
+			zap = window.setInterval(function(){lineZap()},time);
+		}
+		
+		function noZap(){
+			window.clearInterval(zap);
+			canvas.width = canvas.width;
+		}
+			
+		function zapSpeed(){
+			speed++
+			var interval;
+			if (speed == 1)
+				interval = 100;
+			else if (speed == 2)
+				interval = 700;
+			else if (speed == 3){
+				interval = 400;
+				speed = 0;}
+			else {alert("speed is " + speed);}
+				
+			noZap();
+			zapTrigger(interval);
+		}
+			
+		 function lineZap(){
+			canvas.width = canvas.width;
+			image();
+			zap1();
+			zap2();
+			zap3();
+			zap4();
+		}
+		
+		function zap1(){
+		var point = Math.floor(Math.random() * 700) + 100
+		
+			var point2; 
+			if (point < 400)
+				point2 = point - 200;
+			else
+				point2 = point + 200;
+				
+			var point3 = Math.floor(Math.random() * 500) + 1000
+			
+			c.beginPath();
+			c.moveTo(200,400);
+			c.bezierCurveTo(700,point,800,point,point3,point2);
+			c.strokeStyle = "#BF00FF";
+			c.lineWidth = 4;
+			c.lineCap = "round";
+			c.stroke();
+			
+			c.beginPath();
+			c.moveTo(200,400);
+			c.bezierCurveTo(700,point,800,point,point3,point2);
+			c.strokeStyle = "white";
+			c.lineWidth = 1;
+			c.lineCap = "round";
+			c.stroke();
+		}
+		
+		function zap2(){
+			var point = Math.floor(Math.random() * 700) + 100
+		
+			var point2; 
+			if (point < 400)
+				point2 = point - 200;
+			else
+				point2 = point + 200;
+				
+			var point3 = Math.floor(Math.random() * 500) + 1000
+			
+			c.beginPath();
+			c.moveTo(200,400);
+			c.bezierCurveTo(700,point,800,point,point3,point2);
+			c.strokeStyle = "#BF00FF";
+			c.lineWidth = 4;
+			c.lineCap = "round";
+			c.stroke();
+			
+			c.beginPath();
+			c.moveTo(200,400);
+			c.bezierCurveTo(700,point,800,point,point3,point2);
+			c.strokeStyle = "white";
+			c.lineWidth = 1;
+			c.lineCap = "round";
+			c.stroke();
+		}
+		
+		function zap3(){
+			var point = Math.floor(Math.random() * 700) + 100
+		
+			var point2; 
+			if (point < 400)
+				point2 = point - 200;
+			else
+				point2 = point + 200;
+				
+			var point3 = Math.floor(Math.random() * 500) + 1000
+			
+			c.beginPath();
+			c.moveTo(200,400);
+			c.bezierCurveTo(700,point,800,point,point3,point2);
+			c.strokeStyle = "#BF00FF";
+			c.lineWidth = 4;
+			c.lineCap = "round";
+			c.stroke();
+			
+			c.beginPath();
+			c.moveTo(200,400);
+			c.bezierCurveTo(700,point,800,point,point3,point2);
+			c.strokeStyle = "white";
+			c.lineWidth = 1;
+			c.lineCap = "round";
+			c.stroke();
+		}
+		
+		function zap4(){
+			var point = Math.floor(Math.random() * 700) + 100
+		
+			var point2; 
+			if (point < 400)
+				point2 = point - 200;
+			else
+				point2 = point + 200;
+				
+			var point3 = Math.floor(Math.random() * 500) + 1000
+			
+			c.beginPath();
+			c.moveTo(200,400);
+			c.bezierCurveTo(700,point,800,point,point3,point2);
+			c.strokeStyle = "#BF00FF";
+			c.lineWidth = 4;
+			c.lineCap = "round";
+			c.stroke();
+			
+			c.beginPath();
+			c.moveTo(200,400);
+			c.bezierCurveTo(700,point,800,point,point3,point2);
+			c.strokeStyle = "white";
+			c.lineWidth = 1;
+			c.lineCap = "round";
+			c.stroke();
+		}
+	
+	
+	</script>
+	<style>
+	body
+	{
+		margin:20px, 20px, 20px, 20px;
+	}
+	</style>
+	<body>
+	<span style="display:inline;"><button onclick="zapSpeed()">Speed</button><button onclick="speed = 2; zapTrigger(400)">Start</button><button onclick="noZap()">Stop</button> </span>
+	<canvas id="canvas" width="2000" height="900"></canvas>
+
+	</body>
+
+
+</html>
