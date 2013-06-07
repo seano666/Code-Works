@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>GMAPPS</title>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+		<script type="text/javascript" src="jquery-1.10.1.min.js"></script>
+		<style type="text/css">  
+			html 
+			{ 
+				background-color:gray; 
+			}  
+			#controls
+			{
+				text-align:center;
+				color:white;
+			}
+			body 
+		    { 
+				height: 100%; 
+				margin: 0; 
+				padding-top:20px; 
+			}  
+			#map-canvas 
+			{ 
+				margin:auto; 
+			}
+			</style>
+		<script type="text/javascript">
+			var map;
+			var geocoder;
+			function initialize() {				
+				var mapOptions = {    
+					zoom: 12,    
+					center: new google.maps.LatLng(45.4503273, -122.78900859999999),    
+					mapTypeId: google.maps.MapTypeId.ROADMAP  
+				};							
+				map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);					
+			}
+		
+			function codeAddress(){
+				var loc;
+				geocoder = new google.maps.Geocoder();
+				var address = document.getElementById('address').value;  
+				geocoder.geocode( { 'address': address}, function(results, status) {    
+					if (status == google.maps.GeocoderStatus.OK) {      
+						map.setCenter(results[0].geometry.location);      
+						var marker = new google.maps.Marker({          
+							map: map,
+							icon: "http://maps.google.com/mapfiles/ms/micons/blue.png",
+							position: results[0].geometry.location      
+						});
+					} 
+					else {      
+						alert('Geocode was not successful for the following reason: ' + status);    }  
+					});			
+			}
+			
+				$(document).ready(function(){
+					initialize();
+					$("#address").keyup(function(e){
+					if (e.which === 13) {
+						codeAddress();
+						}
+					}); 
+				});
+			
+			
+										
+		</script>
+	</head>
+	<body>
+		<div id="controls" style="display:inline; width:100%;"><div style="margin:auto;">Address: <input type="text" id="address" style="width:250px;"></input><button onclick="codeAddress() ">Go!</button><div></div>
+		<div id="map-canvas" style="width: 1600px; height: 1200px"></div>
+	</body>
+</html>

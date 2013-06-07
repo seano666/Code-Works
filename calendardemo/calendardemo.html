@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Calendar Demo</title>
+		<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="fullcalendar/fullcalendar.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="fullcalendar/fullcalendar.css">
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			editable: false
+			
+		});
+		
+
+				
+			});
+		</script>
+		
+	</head>
+	<body>
+		<div>
+			<img src="calhead.png"></img>
+		</div>
+		<div style="width:761px; background-color:#e4e4e4;opacity:0.97;" id="calendar">
+		
+		</div>
+	
+	</body>
+</html>
