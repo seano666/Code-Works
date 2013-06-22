@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Northwind-SPA</title>
+        <meta charset="UTF-8">
+	    <script type="text/javascript" src="Scripts/jquery-1.10.0.min.js"></script>
+	    <script type="text/javascript" src="Scripts/jquery-ui-1.10.3/ui/jquery-ui.js"></script>
+	    <script type="text/javascript" src="Scripts/knockout-2.2.1.js"></script>
+        <script type="text/javascript" src="Scripts/DataViewModel.js"></script>
+        <script type="text/javascript" src="Scripts/gmaps.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	    <script type="text/javascript">	    
+	        $(document).ready(function () {
+	            loadCustomers();
+	            var dvm = new DataViewModel();
+	            ko.applyBindings(dvm);	            
+	            
+                // body fade-in
+	            $('body').animate({ opacity: 0.88 }, 1000);
+
+	            //mouseover background effects
+	            $(".customertable").hover(
+                    function () {
+                        $(this).stop().animate({ fontSize: '20px', backgroundColor: '#F87531' }, 500);
+                        $('.detaillink', this).stop().animate({ backgroundColor: '#8F8FBD' }, 500);
+                    }, function () {
+                        $(this).stop().animate({ fontSize: '10px', backgroundColor: '#002' }, 500);
+                        $('.detaillink', this).stop().animate({ backgroundColor: '#002' }, 500);
+                });
+
+	            $(".tdData").hover(
+                    function () {
+                        $(this).stop().animate({ backgroundColor: '#F87531', color:'#002' }, 300);
+                    }, function () {
+                        $(this).stop().animate({ backgroundColor: '#002', color:'white' }, 300);
+                    });
+	        });	
+	    </script>
+        <link rel="stylesheet" type="text/css" href="Styles/style.css"></link>
+    </head>
+    <body>
+        <div id="wrapper">
+            <p class="pagehead"><h1>Northwind Customers</h1><span id="homebutton" data-bind="click: home" >Home</span></p>
+
+            <!-- home section -->
+            <div id="home" data-bind="visible: viewType() == 'home'">
+                <div class="homebox">
+                    <h2 style="margin-top:10px">Welcome to the Northwind customer data application</h2>
+                    <div>Click on the image to continue <br /><a href="#"><img data-bind="click: viewall" src="Images/nwind.jpg"/></a></div>
+                </div>
+            </div>
+
+            <!-- view all customers -->
+           <div id="viewall" data-bind="foreach: customers, visible: viewType() == 'viewall'">
+               <table class="customertable">
+                    <tr>
+                        <td colspan="2"><h2 data-bind="text: CompanyName"></h2></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" data-bind="text: Address"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><span data-bind="text: City"></span>,&nbsp;<span data-bind="text: PostalCode"></span>&nbsp;&nbsp;<span data-bind="text: Country"></span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" data-bind="text: ContactName"></td>
+                    </tr>
+                   <tr><td colspan="2">&nbsp;</td></tr>
+                    <tr>                      
+                        <td id="tdlink"><span class="detaillink" data-bind="click: $parent.detailview">More Info</span></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- view customer detail -->
+            <div id="detailview" data-bind="visible: viewType() == 'detailview'">
+                <table id="detailtable">
+                    <tr><td colspan="4" class="detailtitle"><h2>&nbsp;&nbsp;Detail view for customer: <span data-bind="text: currentCustomerCustomerID"></span></h2></td></tr>
+                    <tr><td>&nbsp;</td></tr>
+                    <tr><td></td><td>Customer ID: </td><td class="tdData" data-bind="text: currentCustomerCustomerID"></td><td></td></tr>
+                    <tr><td></td><td>Company Name: </td><td class="tdData" data-bind="text: currentCustomerCompanyName"></td><td></td></tr>
+                    <tr><td></td><td>Contact Name: </td><td class="tdData" data-bind="text: currentCustomerContactName"></td><td></td></tr>
+                    <tr><td></td><td>Contact Title: </td><td class="tdData" data-bind="text: currentCustomerContactTitle"></td><td></td></tr>
+                    <tr><td></td><td>Company Address: </td><td class="tdData" data-bind="text: currentCustomerAddress"></td><td></td></tr>
+                    <tr><td></td><td>City: </td><td class="tdData" data-bind="text: currentCustomerCity"></td><td></td></tr>
+                    <tr><td></td><td data-bind="visible: currentCustomerRegion == ''">Region: </td><td class="tdData" data-bind="text: currentCustomerRegion"></td><td></td></tr>
+                    <tr><td></td><td>Postal Code: </td><td class="tdData" data-bind="text: currentCustomerPostalCode"></td><td></td></tr>
+                    <tr><td></td><td>Country: </td><td class="tdData" data-bind="text: currentCustomerCountry"></td><td></td></tr>
+                    <tr><td></td><td>Phone: </td><td class="tdData" data-bind="text: currentCustomerPhone"></td><td></td></tr>
+                    <tr><td></td><td>Fax: </td><td class="tdData" data-bind="text: currentCustomerFax"></td><td></td></tr>       
+                </table>
+                <br />
+                <p align="center">
+                    <span class="backlink" data-bind="click: viewall">&nbsp;Back&nbsp;</span>
+                    <span class="backlink" data-bind="click: map">&nbsp;Map it!&nbsp;</span>
+                    <input type="hidden" id="mapaddress" data-bind="value: currentCustomerMapAddress" />
+                </p>
+            </div>
+
+            <!-- map customer address -->
+            <div id="mapview" data-bind="visible: viewType() == 'map'">
+                <div>
+                    <span data-bind="text: currentCustomerCompanyName"></span><br /><span data-bind="text: currentCustomerMapAddress"></span>
+                </div>
+                <div id="map-canvas">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
